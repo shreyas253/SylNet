@@ -1,2 +1,2 @@
-# WaveCount
-Code for WaveCount
+# SylNet
+Code for SylNet
