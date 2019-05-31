@@ -1,2 +1,0 @@
-model_checkpoint_path: "/l/seshads1/code/git/SylNet/saved_model/model_adap.ckpt"
-all_model_checkpoint_paths: "/l/seshads1/code/git/SylNet/saved_model/model_adap.ckpt"
