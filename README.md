@@ -41,7 +41,7 @@ train_adap_model.py - Adapt main SylNet model. Change line 20 in the code to you
 
 test_model.py	- Test trained model. Change line 20 in the code to your current path. Change line 24 in the code to your choice of the trained model.  Files config_files_test.txt and config_sylls_test.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
 
-run_model.py	- Run trained model to get . Change line 20 in the code to your current path. Change line 24 in the code to your choice of the trained model. Files config_files_run.txt contain the paths to .wav sound files. The files results.npy will contain predicted the syllable counts for the .wav files in config_files_run.txt.
+run_model.py	- Run trained model to get sylable counts. Change line 20 in the code to your current path. Change line 24 in the code to your choice of the trained model. Files config_files_run.txt contain the paths to .wav sound files. The files results.npy will contain predicted the syllable counts for the .wav files in config_files_run.txt.
 
 
 
