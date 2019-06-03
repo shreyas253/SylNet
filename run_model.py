@@ -26,7 +26,7 @@ res_path = mainFile + 'results.npy'
 
 ########### GET DATA #############
 
-fileList = list(filter(bool,[line.rstrip('\n') for line in open('config_files_test.txt')]))
+fileList = list(filter(bool,[line.rstrip('\n') for line in open('config_files_run.txt')]))
 
 ############### HARD CODED AS THIS IS WHAT THE MAIN MODEL IS TRAINED ON ##############
 maxT = 91  
