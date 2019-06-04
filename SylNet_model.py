@@ -6,7 +6,7 @@ import math
 import numpy as np
 import tensorflow as tf
 
-_FLOATX = tf.float32 # todo: move to lib/precision.py
+_FLOATX = tf.float32 
 
 def get_weight_variable(name, shape=None, initializer=tf.contrib.layers.xavier_initializer_conv2d()):
     if shape is None:
@@ -67,7 +67,6 @@ class CNET():
     def get_variable_list(self):
         return tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self._name)          
     def get_variable_list_post(self):
-#        return tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=tf.reduce_join([self._name,'/postproc_module']))
         return tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='S/postproc_module') 
 
     def _causal_conv(self,X, W, filter_width):
@@ -196,14 +195,11 @@ class CNET():
             Y = tf.layers.dropout(Y,rate=self.DRrate ,training=self.isTrain)
             
             lstm_layer=tf.nn.rnn_cell.LSTMCell(num_units, reuse=tf.AUTO_REUSE, name='lstm_layer')
-            #Y=tf.unstack(Y ,time_steps,1)
             outputsM,_=tf.nn.dynamic_rnn(lstm_layer,Y,sequence_length=self.seqLen,dtype="float32")
             outputs = tf.gather_nd(outputsM,self.endList)
             prediction=tf.matmul(outputs,W2)+b2
             
-            #predictionALL = tf.matmul(tf.reshape(outputsM,[-1,s]),W2)+b2
-            #predictionALL = 1#tf.matmul(outputsM,W2)+b2
-            
+                        
         return prediction
     
     def _last_layer(self, last_layer_ip):
@@ -227,16 +223,12 @@ class CNET():
             Y += b1
             Y = tf.nn.relu(Y)
 
-#            Y = tf.nn.convolution(Y, W2, padding='SAME')    
-#            Y += b2
             
             lstm_layer=tf.nn.rnn_cell.LSTMCell(num_units, reuse=tf.AUTO_REUSE, name='lstm_layer')
-            #Y=tf.unstack(Y ,time_steps,1)
             outputsM,_=tf.nn.dynamic_rnn(lstm_layer,Y,sequence_length=self.seqLen,dtype="float32")
             outputs = tf.gather_nd(outputsM,self.endList)
             prediction=tf.matmul(outputs,W2)+b2
             
-            #predictionALL = tf.matmul(tf.reshape(outputsM,[-1,s]),W2)+b2
             predictionALL = 1#tf.matmul(outputsM,W2)+b2
             
         return prediction,predictionALL
