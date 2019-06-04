@@ -35,15 +35,20 @@ The source code must be referenced when used in a published work.
 
 FILES AND FUNCTIONS
 -------------------
-train_main_model.py - Train main SylNet model (pre-trained model avaliable in ./trained_models/). Change line 20 in the code to your current path. Files config_files.txt and config_sylls.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
+train_SylNet.py - Train main SylNet model (pre-trained model avaliable in ./trained_models/). Files ./config_files/config_files.txt and ./config_files/config_sylls.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
 
-train_adap_model.py - Adapt main SylNet model. Change line 20 in the code to your current path. Files config_files_adap.txt and config_sylls_adap.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
+adap_SylNet.py - Adapt main SylNet model. Files ./config_files/config_files_adap.txt and ./config_files/config_sylls_adap.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
 
-test_model.py	- Test trained model. Change line 20 in the code to your current path. Change line 24 in the code to your choice of the trained model.  Files config_files_test.txt and config_sylls_test.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
+validate_SylNet.py	- Test trained model. Files ./config_files/config_files_test.txt and ./config_files/config_sylls_test.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
 
-run_model.py	- Run trained model to get sylable counts. Change line 20 in the code to your current path. Change line 24 in the code to your choice of the trained model. Files config_files_run.txt contain the paths to .wav sound files. The files results.npy will contain predicted the syllable counts for the .wav files in config_files_run.txt.
+run_SylNet.py	- Run trained model to get sylable counts. Files ./config_files/config_files_run.txt contain the paths to .wav sound files. The files results.txt will contain predicted the syllable counts for the .wav files in ./config_files/config_files_run.txt.
 
-
+REQUIRED PACKAGES
+-------------------
+- LibRosa
+- TensorFlow
+- SciPy
+- Numpy
 
 REFERENCES
 ---------
