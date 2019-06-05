@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 The source code must be referenced when used in a published work.
 
-FILES AND FUNCTIONS
+FILES AND FUNCTIONS – A QUICK GUIDE:
 -------------------
 train_SylNet.py - Train main SylNet model (pre-trained model avaliable in ./trained_models/). Files ./config_files/config_files.txt and ./config_files/config_sylls.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
 
@@ -41,15 +41,48 @@ adap_SylNet.py - Adapt main SylNet model. Files ./config_files/config_files_adap
 
 validate_SylNet.py	- Test trained model. Files ./config_files/config_files_test.txt and ./config_files/config_sylls_test.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
 
-run_SylNet.py	- Run trained model to get sylable counts. Files ./config_files/config_files_run.txt contain the paths to .wav sound files. The files results.txt will contain predicted the syllable counts for the .wav files in ./config_files/config_files_run.txt.
+run_SylNet.py	- Run trained model to get syllable counts. Files ./config_files/config_files_run.txt contain the paths to .wav sound files. The files results.txt will contain predicted the syllable counts for the .wav files in ./config_files/config_files_run.txt.
+
+
+USING THE PRE-TRAINED MODEL TO SYLLABIFY SPEECH DATA
+-------------------
+
+SYNTAX:
+python run_SylNet.py <input_files> <result_file>
+
+where <input_files> can be:
+  1) A path to a single .wav file, e.g.:
+      python run_SylNet.py /path_to/audiofile.wav results.txt
+
+  2) A path to a folder with .wav files (to process all the .wavs), e.g.:
+      python run_SylNet.py /path_to/my_audiofiles/ results.txt
+
+  3) A path to a .txt file where each row of the text file contains a path to a
+      .wav file to be processed, e.g.:
+      python run_SylNet.py /path_to/my_filepointrs/files_to_process.txt results.txt
+
+By default (without any input arguments), run_SylNet.py will attempt to load files
+specified in config_files/config_files_run.txt and stores the results in
+results.txt located in the main directory of SylNet.
+
+OUTPUTS:
+  Result file (e.g., results.txt) will contain an integer number corresponding to
+  the estimated syllable count, one number per row corresponding to each input file
+  provided to the algorithm.
+
+  If a folder path with .wavs in it was provided as the input, a separate output file
+  of form <resultfilename_without_extension>_files.txt with processed audio filenames  
+  will be produced, allowing mapping of output counts to input files.
+
+
 
 REQUIRED PACKAGES
 -------------------
-- LibRosa
-- TensorFlow
+- LibROSA (https://librosa.github.io/librosa/)
+- TensorFlow (tested on version 1.10.1)
 - SciPy
 - Numpy
 
 REFERENCES
 ---------
-[1] Seshadri S. & Räsänen O. SylNet: An Adaptable End-to-End Syllable Count Estimator for Speech. Submitted to a Journal.
+[1] Seshadri S. & Räsänen O. SylNet: An Adaptable End-to-End Syllable Count Estimator for Speech. Submitted for publication.
