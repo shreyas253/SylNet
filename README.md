@@ -52,14 +52,17 @@ python run_SylNet.py <input_files> <result_file>
 
 where <input_files> can be:
   1) A path to a single .wav file, e.g.:
+
       python run_SylNet.py /path_to/audiofile.wav results.txt
 
   2) A path to a folder with .wav files (to process all the .wavs), e.g.:
+
       python run_SylNet.py /path_to/my_audiofiles/ results.txt
 
   3) A path to a .txt file where each row of the text file contains a path to a
       .wav file to be processed, e.g.:
-      python run_SylNet.py /path_to/my_filepointrs/files_to_process.txt results.txt
+
+      python run_SylNet.py /path_to/my_filepointers/files_to_process.txt results.txt
 
 By default (without any input arguments), run_SylNet.py will attempt to load files
 specified in config_files/config_files_run.txt and stores the results in
