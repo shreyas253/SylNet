@@ -1,2 +1,2 @@
-model_checkpoint_path: "/l/seshads1/code/git/SylNet-tmp//trained_models/model_trained_adap.ckpt"
-all_model_checkpoint_paths: "/l/seshads1/code/git/SylNet-tmp//trained_models/model_trained_adap.ckpt"
+model_checkpoint_path: "/Users/rasaneno/Documents/koodit/SylNet/trained_models/model_trained_adap.ckpt"
+all_model_checkpoint_paths: "/Users/rasaneno/Documents/koodit/SylNet/trained_models/model_trained_adap.ckpt"

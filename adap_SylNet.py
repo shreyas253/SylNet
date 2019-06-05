@@ -12,23 +12,24 @@ import numpy as np
 import librosa.display
 import tensorflow as tf
 import time
-import SylNet_model 
+import SylNet_model
 import math
 import os
 
 
-mainFile = os.path.dirname(os.path.realpath(__file__)) 
+mainFile = os.path.dirname(os.path.realpath(__file__))
 modelFile = mainFile + '/trained_models/'
 means_path = modelFile + 'means.npy'
 std_path = modelFile + 'stds.npy'
 model_path = modelFile + 'model_trained.ckpt'
 model_path_adap = modelFile + 'model_trained_adap.ckpt'
+config_path = mainFile + '/config_files/'
 
 
 ########### GET DATA #############
-fileList = list(filter(bool,[line.rstrip('\n') for line in open('config_files_adap.txt')]))
+fileList = list(filter(bool,[line.rstrip('\n') for line in open(config_path + 'config_files_adap.txt')]))
 
-noSyls =  list(map(int, list(filter(bool,[line.rstrip('\n') for line in open('config_sylls_adap.txt')]))))
+noSyls =  list(map(int, list(filter(bool,[line.rstrip('\n') for line in open(config_path + 'config_sylls_adap.txt')]))))
 
 maxT = 91   # HARD CODED AS THIS IS WHAT THE MAIN MODEL IS TRAINED ON
 
@@ -40,7 +41,7 @@ for i in range(len(noSyls)):
 T = np.asarray(noSyls, dtype=np.int32)
 
 if len(fileList) != len(noSyls):
-    raise Exception('Check the config files. Lengths dont match!!!!')        
+    raise Exception('Check the config files. Lengths dont match!!!!')
 
 noUtt_main = len(noSyls)
 
@@ -51,14 +52,14 @@ X = np.ndarray((noUtt_main,),dtype=object)
 for i in range(noUtt_main):
     fs, y = scipy.io.wavfile.read(fileList[i])
     y = y/max(abs(y))
-    y = librosa.core.resample(y=y, orig_sr=fs, target_sr=Fs)    
+    y = librosa.core.resample(y=y, orig_sr=fs, target_sr=Fs)
     X[i] = np.transpose(20*np.log10(librosa.feature.melspectrogram(y=y, sr=Fs, n_mels=24, n_fft=w_l, hop_length=w_h)))
-    
+
 MEAN = np.load(means_path)  # Z norm data based on training data mean and std
-STD = np.load(std_path) 
+STD = np.load(std_path)
 for i in range(noUtt_main):
     X[i] = (X[i] - MEAN)/STD
-    
+
 idx = np.random.permutation(noUtt_main)
 no_train = round(0.8*noUtt_main)
 
@@ -66,10 +67,10 @@ x_val = X[no_train+1:]
 X = X[:no_train]
 
 t_val_c = T_c[no_train+1:,]
-T_c = T_c[:no_train,]  
+T_c = T_c[:no_train,]
 
 t_val = T[no_train+1:]
-T = T[:no_train]  
+T = T[:no_train]
 
 
 print('DATA LOADING DONE')
@@ -79,15 +80,15 @@ print('DATA LOADING DONE')
 def padarray(A, size):
     t = size - A.shape[0]
     if t==0:
-        r = A        
+        r = A
     else:
-        r =np.pad(A,[(0,t),(0,0)],'constant')           
+        r =np.pad(A,[(0,t),(0,0)],'constant')
     return r
 
 tf.reset_default_graph()
 
 ## PARAMETERS
-residual_channels = 128 
+residual_channels = 128
 filter_width = 5
 dilations = [1]*10
 input_channels = X[0].shape[1]
@@ -103,7 +104,7 @@ ids = tf.placeholder(shape=(None, 2), dtype=tf.int32)
 ids_len = tf.placeholder(shape=(None), dtype=tf.int32)
 ids_len = tf.placeholder(shape=(None), dtype=tf.int32)
 is_train = tf.placeholder(dtype=tf.bool)
-S = SylNet_model.CNET(name='S', 
+S = SylNet_model.CNET(name='S',
                    input_channels=input_channels,
                    output_channels=output_channels,
                    residual_channels=residual_channels,
@@ -153,67 +154,66 @@ dontStop=1
 with tf.Session(config=tfconfig) as sess:
 
     init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
-    sess.run(init_op) 
+    sess.run(init_op)
     saver.restore(sess, model_path)
-    
+
     while (epoch<num_epochs) & (dontStop):
-                
+
         #test pre-trained model on val data
         no_utt = x_val.shape[0]
         loss_test = np.ones((no_utt,1))
         for n_val in range(no_utt):
             X_mini = x_val[n_val]
             X_mini = X_mini[np.newaxis,:,:]
-            l_mini = np.asarray([X_mini.shape[1]],dtype=np.int32)            
-            E_list = np.asarray([[0,X_mini.shape[1]-1]])                    
-            loss_test[n_val] = sess.run([loss_obj], feed_dict={x: X_mini,y:t_val[[n_val]],y_c:t_val_c[[n_val]],ids:E_list, ids_len:l_mini,is_train:False})  
-        loss_val[0] = np.mean(loss_test)           
+            l_mini = np.asarray([X_mini.shape[1]],dtype=np.int32)
+            E_list = np.asarray([[0,X_mini.shape[1]-1]])
+            loss_test[n_val] = sess.run([loss_obj], feed_dict={x: X_mini,y:t_val[[n_val]],y_c:t_val_c[[n_val]],ids:E_list, ids_len:l_mini,is_train:False})
+        loss_val[0] = np.mean(loss_test)
         save_path = saver.save(sess, model_path_adap)
-                
-        
-        # Train 
+
+
+        # Train
         if X.shape[0]>batchSize:
             idx = np.random.permutation(X.shape[0])
             idx = idx[:batchSize*noBatches]
             idx = np.split(idx,noBatches)
         else:
             idx = np.random.permutation(X.shape[0])
-            idx = np.split(idx,1)                    
+            idx = np.split(idx,1)
         saver = tf.train.Saver(max_to_keep=0)
         t = time.time()
-        for batch_i in range(len(idx)):            
+        for batch_i in range(len(idx)):
             X_mini = X[idx[batch_i]]
             l_mini = np.asarray([xx.shape[0] for xx in X_mini],dtype=np.int32)
-            X_mini = np.asarray([padarray(xx,max(l_mini)) for xx in X_mini])                    
+            X_mini = np.asarray([padarray(xx,max(l_mini)) for xx in X_mini])
             E_list = np.asarray([[i,xx-1] for i,xx in enumerate(l_mini)],dtype=np.int32)
             T_mini = T[idx[batch_i]]
             T_mini_c = T_c[idx[batch_i]]
             _, lossD = sess.run([opt,loss_obj], feed_dict={x: X_mini,y: T_mini,y_c: T_mini_c, ids: E_list, ids_len:l_mini,is_train:True})
-            elapsed = time.time() - t       
-            print("Errors for epoch %d, batch %d: %f, and took time: %f" % (epoch, batch_i,lossD, elapsed)) 
-        
-        # validation        
+            elapsed = time.time() - t
+            print("Errors for epoch %d, batch %d: %f, and took time: %f" % (epoch, batch_i,lossD, elapsed))
+
+        # validation
         no_utt = x_val.shape[0]
         loss_test = np.ones((no_utt,1))
         for n_val in range(no_utt):
             X_mini = x_val[n_val]
             X_mini = X_mini[np.newaxis,:,:]
-            l_mini = np.asarray([X_mini.shape[1]],dtype=np.int32)            
-            E_list = np.asarray([[0,X_mini.shape[1]-1]])                    
-            loss_test[n_val] = sess.run([loss_obj], feed_dict={x: X_mini,y:t_val[[n_val]],y_c:t_val_c[[n_val]],ids:E_list, ids_len:l_mini,is_train:False})  
-        loss_val[epoch+1] = np.mean(loss_test)   
+            l_mini = np.asarray([X_mini.shape[1]],dtype=np.int32)
+            E_list = np.asarray([[0,X_mini.shape[1]-1]])
+            loss_test[n_val] = sess.run([loss_obj], feed_dict={x: X_mini,y:t_val[[n_val]],y_c:t_val_c[[n_val]],ids:E_list, ids_len:l_mini,is_train:False})
+        loss_val[epoch+1] = np.mean(loss_test)
 
          # save model if it reduces loss
         if loss_val[epoch+1] == np.min(loss_val):
             save_path = saver.save(sess, model_path_adap)
 
-        # stop training is condition is satisfied        
+        # stop training is condition is satisfied
         if epoch>stpCrit_min:
             tmp = loss_val[epoch:epoch-stpCrit_win-1:-1]
             tmp = tmp[1:]-tmp[0]
             if ((tmp < 0).sum() == tmp.size).astype(np.int):
                 dontStop = 0
-              
+
         print("Validation errors for epoch %d: %f , and took time: %f" % (epoch, loss_val[epoch+1], elapsed))
-        epoch += 1    
-       
+        epoch += 1

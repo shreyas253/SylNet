@@ -43,6 +43,8 @@ validate_SylNet.py	- Test trained model. Files ./config_files/config_files_test.
 
 run_SylNet.py	- Run trained model to get syllable counts. Files ./config_files/config_files_run.txt contain the paths to .wav sound files. The files results.txt will contain predicted the syllable counts for the .wav files in ./config_files/config_files_run.txt.
 
+run_SylNet_adapted.py - Same as above, but uses the adapted model that resulted from adap_SylNet.py
+
 
 USING THE PRE-TRAINED MODEL TO SYLLABIFY SPEECH DATA
 -------------------
@@ -77,6 +79,10 @@ OUTPUTS:
   of form <resultfilename_without_extension>_files.txt with processed audio filenames  
   will be produced, allowing mapping of output counts to input files.
 
+ADAPTED MODELS:
+
+Use run_SylNet_adapted.py to perform syllable counting with an adapted model.
+Otherwise syntax is the same.
 
 
 REQUIRED PACKAGES
