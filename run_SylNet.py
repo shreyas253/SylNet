@@ -2,7 +2,7 @@
 Created on Tue May 28 12:54:43 2019 (SS)
 Modified on Wed June 5 12:30:00 2019 (OR)
 
-@author: Shreyas Seshadri, Okko Räsänen
+@author: Shreyas Seshadri, Okko Rasanen
 """
 
 from __future__ import print_function
