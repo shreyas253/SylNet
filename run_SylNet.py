@@ -70,8 +70,6 @@ else:
         raise Exception('Provided input file list does not exist.')
 
 
-
-
 maxT = 91   # HARD CODED AS THIS IS WHAT THE MAIN MODEL IS TRAINED ON
 
 noUtt_main = len(fileList)

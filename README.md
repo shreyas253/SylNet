@@ -35,11 +35,11 @@ The source code must be referenced when used in a published work.
 
 FILES AND FUNCTIONS – A QUICK GUIDE:
 -------------------
-train_SylNet.py - Train main SylNet model (pre-trained model avaliable in ./trained_models/). Files ./config_files/config_files.txt and ./config_files/config_sylls.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
+train_SylNet.py - Train main SylNet model (pre-trained model available in ./trained_models/). Files ./config_files/config_files.txt and ./config_files/config_sylls.txt contain the paths to .wav sound files and number of syllables for each .wav file, respectively.
 
-adap_SylNet.py - Adapt main SylNet model. Files ./config_files/config_files_adap.txt and ./config_files/config_sylls_adap.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
+adap_SylNet.py - Adapt main SylNet model. Files ./config_files/config_files_adap.txt and ./config_files/config_sylls_adap.txt contain the paths to .wav sound files and number of syllables for each .wav file, respectively.
 
-validate_SylNet.py	- Test trained model. Files ./config_files/config_files_test.txt and ./config_files/config_sylls_test.txt contain the paths to .wav sound files and number of syllables for each .wav file respectively.
+validate_SylNet.py	- Test trained model. Files ./config_files/config_files_test.txt and ./config_files/config_sylls_test.txt contain the paths to .wav sound files and number of syllables for each .wav file, respectively.
 
 run_SylNet.py	- Run trained model to get syllable counts. Files ./config_files/config_files_run.txt contain the paths to .wav sound files. The files results.txt will contain predicted the syllable counts for the .wav files in ./config_files/config_files_run.txt.
 
@@ -81,7 +81,7 @@ OUTPUTS:
 
 REQUIRED PACKAGES
 -------------------
-- LibROSA (https://librosa.github.io/librosa/)
+- LibROSA (tested with 0.6.3, https://librosa.github.io/librosa/)
 - TensorFlow (tested on version 1.10.1)
 - SciPy
 - Numpy
