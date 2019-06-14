@@ -8,6 +8,12 @@ Comments/questions are welcome! Please contact: shreyas.seshadri@aalto.fi
 
 Last updated: 03.06.2019
 
+Please cite the following paper whenever using these codes, their derivatives, or another
+implementation of SylNet in a publication:
+
+Seshadri S. & Räsänen O. SylNet: An Adaptable End-to-End Syllable Count Estimator for Speech. Accepted
+for publication in IEEE Signal Processing Letters.
+
 
 LICENSE
 -------
