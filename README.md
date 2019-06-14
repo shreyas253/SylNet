@@ -84,6 +84,10 @@ ADAPTED MODELS:
 Use run_SylNet_adapted.py to perform syllable counting with an adapted model.
 Otherwise syntax is the same.
 
+NOTE:
+
+The current implementation of SylNet supports maximum output syllable count of 91 syllables per input signal. If your input data is suspected to contain more than 91 syllables (approx. 18 seconds of speech), consider dividing the data into shorter segments before applying SylNet.
+
 
 REQUIRED PACKAGES
 -------------------
