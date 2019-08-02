@@ -97,7 +97,8 @@ The current implementation of SylNet supports maximum output syllable count of 9
 
 REQUIRED PACKAGES
 -------------------
-- LibROSA (tested with 0.6.3, https://librosa.github.io/librosa/)
+- Python 3 (tested on 3.6.5)
+- LibROSA (tested with 0.6.3, and 0.7, https://librosa.github.io/librosa/)
 - TensorFlow (tested on version 1.10.1)
 - SciPy
 - Numpy
