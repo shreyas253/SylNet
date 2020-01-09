@@ -15,6 +15,8 @@ import time
 import SylNet_model
 import math
 import os
+import sys
+import glob
 
 
 mainFile = os.path.dirname(os.path.realpath(__file__))
@@ -26,10 +28,65 @@ model_path_adap = modelFile + 'model_trained_adap.ckpt'
 config_path = mainFile + '/config_files/'
 
 
-########### GET DATA #############
-fileList = list(filter(bool,[line.rstrip('\n') for line in open(config_path + 'config_files_adap.txt')]))
+if(len(sys.argv) == 1): # No extra arguments, use default input and output files
+    file_list =  list(filter(bool,[line.rstrip('\n') for line in open(config_path + 'config_files_adap.txt')]))
+    model_path_adap = modelFile + 'model_trained_OS_adap.ckpt'
+elif(len(sys.argv) == 2):  # Custom list of files for input
+    raise Exception('Must provide at least files and target counts')
+    model_path_adap = modelFile + 'model_trained_OS_adap.ckpt'
+    countfile = config_path + 'config_sylls_adap.txt'
+    if(isinstance(sys.argv[1], str)):
+        file_list = sys.argv[1]
+    else:
+        raise Exception('First input argument must be a string (file path)')
+elif(len(sys.argv) == 3): # Custom list of input files + custom result file
+    model_path_adap = modelFile + 'model_trained_OS_adap.ckpt'
+    if(isinstance(sys.argv[1], str)):
+        file_list = sys.argv[1]
+    else:
+        raise Exception('First input argument must be a string (file path)')
+    if(isinstance(sys.argv[2], str)):
+        countfile = sys.argv[2]
+    else:
+        raise Exception('Second argument must be a string (file path)')
+elif(len(sys.argv) == 4): # Custom list of input files + custom result file
+    if(isinstance(sys.argv[1], str)):
+        file_list = sys.argv[1]
+    else:
+        raise Exception('First input argument must be a string (file path)')
+    if(isinstance(sys.argv[2], str)):
+        countfile = sys.argv[2]
+    else:
+        raise Exception('Second argument must be a string (file path)')
+    if(isinstance(sys.argv[3], str)):
+        model_path_adap = sys.argv[3]
+    else:
+        raise Exception('Second argument must be a string (file path)')
 
-noSyls =  list(map(int, list(filter(bool,[line.rstrip('\n') for line in open(config_path + 'config_sylls_adap.txt')]))))
+
+
+
+########### GET DATA #############
+#fileList = list(filter(bool,[line.rstrip('\n') for line in open(config_path + 'config_files_adap.txt')]))
+
+wasdir = 0
+# If input
+if(os.path.isdir(file_list)):
+    fileList = sorted(glob.glob(file_list + '*.wav'))
+    wasdir = 1
+    if(len(fileList) == 0):
+        raise Exception('Provided directory contains no .wav files')
+elif(file_list.endswith('.wav')):
+    fileList = list()
+    fileList.append(file_list)
+else:
+    if(os.path.isfile(file_list)):
+        fileList = list(filter(bool,[line.rstrip('\n') for line in open(file_list)]))
+    else:
+        raise Exception('Provided input file list does not exist.')
+
+#noSyls =  list(map(int, list(filter(bool,[line.rstrip('\n') for line in open(config_path + 'config_sylls_adap.txt')]))))
+noSyls =  list(map(int, list(filter(bool,[line.rstrip('\n') for line in open(countfile)]))))
 
 maxT = 91   # HARD CODED AS THIS IS WHAT THE MAIN MODEL IS TRAINED ON
 

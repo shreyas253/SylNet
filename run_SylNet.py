@@ -32,8 +32,9 @@ config_path = mainFile + '/config_files/'
 # Parse input arguments
 
 
+
 if(len(sys.argv) == 1): # No extra arguments, use default input and output files
-    file_list =  config_path + 'config_files_run.txt'
+    file_list =  mainFile + '/config_files/config_files_run.txt' #config_path + 'config_files_run.txt'
     res_path = mainFile + '/results.txt'
 elif(len(sys.argv) == 2):  # Custom list of files for input
     res_path = mainFile + '/results.txt'
@@ -50,6 +51,21 @@ elif(len(sys.argv) == 3): # Custom list of input files + custom result file
         res_path = sys.argv[2]
     else:
         raise Exception('Second argument must be a string (file path)')
+elif(len(sys.argv) == 4):
+    if(isinstance(sys.argv[1], str)):
+        file_list = sys.argv[1]
+    else:
+        raise Exception('First input argument must be a string (file path)')
+    if(isinstance(sys.argv[2], str)):
+        res_path = sys.argv[2]
+    else:
+        raise Exception('Second argument must be a string (file path)')
+    if(isinstance(sys.argv[3], str)):
+        model_path = sys.argv[3]
+    else:
+        raise Exception('Model path must be a string (file path)')
+
+
 
 
 ########### GET DATA #############
@@ -68,7 +84,6 @@ else:
         fileList = list(filter(bool,[line.rstrip('\n') for line in open(file_list)]))
     else:
         raise Exception('Provided input file list does not exist.')
-
 
 maxT = 91   # HARD CODED AS THIS IS WHAT THE MAIN MODEL IS TRAINED ON
 
