@@ -6,8 +6,6 @@ Tensorflow (Python) implementation of a Syllable Count estimator using gated Con
 
 Comments/questions are welcome! Please contact: shreyas.seshadri@aalto.fi
 
-Last updated: 03.06.2019
-
 Please cite the following paper whenever using these codes, their derivatives, or another
 implementation of SylNet in a publication:
 
