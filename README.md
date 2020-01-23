@@ -96,7 +96,7 @@ REQUIRED PACKAGES
 -------------------
 - Python 3 (tested on 3.6.5)
 - LibROSA (tested with 0.6.3, and 0.7, https://librosa.github.io/librosa/)
-- TensorFlow (tested on version 1.10.1)
+- TensorFlow (tested on version 1.10.1). Does NOT currently work on Tensorflow 2.1. 
 - SciPy
 - Numpy
 
