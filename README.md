@@ -11,8 +11,7 @@ Last updated: 03.06.2019
 Please cite the following paper whenever using these codes, their derivatives, or another
 implementation of SylNet in a publication:
 
-Seshadri S. & Räsänen O. SylNet: An Adaptable End-to-End Syllable Count Estimator for Speech. Accepted
-for publication in IEEE Signal Processing Letters.
+Seshadri S. & Räsänen O. SylNet: An Adaptable End-to-End Syllable Count Estimator for Speech. IEEE Signal Processing Letters, 26, 1359–1363, 2019.
 
 
 LICENSE
@@ -105,4 +104,4 @@ REQUIRED PACKAGES
 
 REFERENCES
 ---------
-[1] Seshadri S. & Räsänen O. SylNet: An Adaptable End-to-End Syllable Count Estimator for Speech. Submitted for publication.
+[1] Seshadri, S. & Räsänen, O. (2019). SylNet: An Adaptable End-to-End Syllable Count Estimator for Speech. IEEE Signal Processing Letters, 26, 1359–1363.
