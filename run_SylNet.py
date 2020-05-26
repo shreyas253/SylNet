@@ -31,8 +31,6 @@ config_path = mainFile + '/config_files/'
 
 # Parse input arguments
 
-
-
 if(len(sys.argv) == 1): # No extra arguments, use default input and output files
     file_list =  mainFile + '/config_files/config_files_run.txt' #config_path + 'config_files_run.txt'
     res_path = mainFile + '/results.txt'
