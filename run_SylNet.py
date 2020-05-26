@@ -93,9 +93,9 @@ X = np.ndarray((noUtt_main,),dtype=object)
 for i in range(noUtt_main):
     if(os.path.isfile(fileList[i]) == False):
         raise Exception('A file in the given file list does not exist.')
-    fs, y = scipy.io.wavfile.read(fileList[i])
+    y, _ = librosa.core.load(fileList[i], sr = Fs, mono = True)
     y = y/max(abs(y))
-    y = librosa.core.resample(y=y, orig_sr=fs, target_sr=Fs)
+    #y = librosa.core.resample(y=y, orig_sr=fs, target_sr=Fs)
     X[i] = np.transpose(20*np.log10(librosa.feature.melspectrogram(y=y, sr=Fs, n_mels=24, n_fft=w_l, hop_length=w_h)))
 
 
