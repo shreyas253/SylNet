@@ -46,7 +46,7 @@ for i in range(noUtt_main):
     fs, y = scipy.io.wavfile.read(fileList[i])
     y = y/max(abs(y))
     y = librosa.core.resample(y=y, orig_sr=fs, target_sr=Fs)    
-    X[i] = np.transpose(20*np.log10(librosa.feature.melspectrogram(y=y, sr=Fs, n_mels=24, n_fft=w_l, hop_length=w_h)))
+    X[i] = np.transpose(20*np.log10(librosa.feature.melspectrogram(y=y, sr=Fs, n_mels=24, n_fft=w_l, hop_length=w_h)+0.00000000001))
 
 MEAN = np.mean(np.concatenate(X),axis=0) # Z norm data
 STD = np.std(np.concatenate(X),axis=0)  
