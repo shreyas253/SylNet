@@ -96,7 +96,7 @@ for i in range(noUtt_main):
     y, _ = librosa.core.load(fileList[i], sr = Fs, mono = True)
     y = y/max(abs(y))
     #y = librosa.core.resample(y=y, orig_sr=fs, target_sr=Fs)
-    X[i] = np.transpose(20*np.log10(librosa.feature.melspectrogram(y=y, sr=Fs, n_mels=24, n_fft=w_l, hop_length=w_h)+0.00000000001)))
+    X[i] = np.transpose(20*np.log10(librosa.feature.melspectrogram(y=y, sr=Fs, n_mels=24, n_fft=w_l, hop_length=w_h)+0.00000000001))
 
 
 MEAN = np.load(means_path)  # Z norm data based on training data mean and std
