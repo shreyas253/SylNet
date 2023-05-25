@@ -4,9 +4,9 @@ import os
 import sys
 import math
 import numpy as np
-import tensorflow as tf
-#import tensorflow.compat.v1 as tf
-#tf.disable_v2_behavior()
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 _FLOATX = tf.float32 
 
